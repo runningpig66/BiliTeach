@@ -1,0 +1,2 @@
+include ':app', ':navdemo1', ':navdemo2', ':navviewmodel', ':calculationtest', ':lifecycles', ':roombasic'
+rootProject.name='BiliTeach'
