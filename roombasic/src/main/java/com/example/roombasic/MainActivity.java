@@ -3,26 +3,51 @@ package com.example.roombasic;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     //    WordDatabase wordDatabase;
 //    WordDao wordDao;
-    TextView textView;
+//    TextView textView;
     Button buttonInsert, buttonUpdate, buttonClear, buttonDelete;
     //    LiveData<List<Word>> allWordsLive;
     WordViewModel wordViewModel;
+
+    RecyclerView recyclerView;
+    MyAdapter myAdapter1;
+    MyAdapter myAdapter2;
+    Switch switch1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        myAdapter1 = new MyAdapter(false);
+        myAdapter2 = new MyAdapter(true);
+        recyclerView.setAdapter(myAdapter1);
+        switch1 = findViewById(R.id.switch1);
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    recyclerView.setAdapter(myAdapter2);
+                } else {
+                    recyclerView.setAdapter(myAdapter1);
+                }
+            }
+        });
+
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 //        wordDatabase = Room.databaseBuilder(this, WordDatabase.class, "word_database")
 //                .allowMainThreadQueries()
@@ -30,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        wordDatabase = WordDatabase.getINSTANCE(this);
 //        wordDao = wordDatabase.getWordDao();
 //        allWordsLive = wordDao.getAllWordsLive();
-        textView = findViewById(R.id.textView);
+//        textView = findViewById(R.id.textViewNumber);
+
         buttonInsert = findViewById(R.id.buttonInsert);
         buttonUpdate = findViewById(R.id.buttonUpdate);
         buttonClear = findViewById(R.id.buttonClear);
@@ -42,11 +68,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wordViewModel.getAllWordsLive().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
-                StringBuilder builder = new StringBuilder();
-                for (Word word : words) {
-                    builder.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
-                }
-                textView.setText(builder.toString());
+                myAdapter1.setAllWords(words);
+                myAdapter1.notifyDataSetChanged();
+                myAdapter2.setAllWords(words);
+                myAdapter2.notifyDataSetChanged();
+
+//                StringBuilder builder = new StringBuilder();
+//                for (Word word : words) {
+//                    builder.append(word.getId()).append(":").append(word.getWord()).append("=").append(word.getChineseMeaning()).append("\n");
+//                }
+//                textView.setText(builder.toString());
             }
         });
     }
