@@ -23,8 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     WordViewModel wordViewModel;
 
     RecyclerView recyclerView;
-    MyAdapter myAdapter1;
-    MyAdapter myAdapter2;
+    //    MyAdapter myAdapter1;
+//    MyAdapter myAdapter2;
+    MyAdapterNew myAdapter1;
+    MyAdapterNew myAdapter2;
     Switch switch1;
 
     @Override
@@ -33,8 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myAdapter1 = new MyAdapter(false);
-        myAdapter2 = new MyAdapter(true);
+//        myAdapter1 = new MyAdapter(false);
+//        myAdapter2 = new MyAdapter(true);
+        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
+        myAdapter1 = new MyAdapterNew(false, wordViewModel);
+        myAdapter2 = new MyAdapterNew(true, wordViewModel);
         recyclerView.setAdapter(myAdapter1);
         switch1 = findViewById(R.id.switch1);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -47,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
-        wordViewModel = ViewModelProviders.of(this).get(WordViewModel.class);
 //        wordDatabase = Room.databaseBuilder(this, WordDatabase.class, "word_database")
 //                .allowMainThreadQueries()
 //                .build();
@@ -68,10 +71,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         wordViewModel.getAllWordsLive().observe(this, new Observer<List<Word>>() {
             @Override
             public void onChanged(List<Word> words) {
+//                myAdapter1.setAllWords(words);
+//                myAdapter2.setAllWords(words);
+//                myAdapter1.notifyDataSetChanged();
+//                myAdapter2.notifyDataSetChanged();
+
+                //在子项中切换switch后，switch执行切换动画，同时更新的数据，
+                //数据更新后会执行到这里进行adapter的更新，导致刷新子项界面，
+                //就会导致switch未执行完动画，界面就被刷新，UI过度不够流畅，
+                //所以这里选择在数据源数量不变时，就不去刷新适配器了，
+                //造成的缺陷就是：首页的UPDATE按钮更新某条数据时界面更新失效。
+                int temp = myAdapter1.getItemCount();
                 myAdapter1.setAllWords(words);
-                myAdapter1.notifyDataSetChanged();
                 myAdapter2.setAllWords(words);
-                myAdapter2.notifyDataSetChanged();
+                if (temp != words.size()) {
+                    myAdapter1.notifyDataSetChanged();
+                    myAdapter2.notifyDataSetChanged();
+                }
 
 //                StringBuilder builder = new StringBuilder();
 //                for (Word word : words) {

@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Word.class}, version = 4, exportSchema = false)
+@Database(entities = {Word.class}, version = 5, exportSchema = false)
 public abstract class WordDatabase extends RoomDatabase {
     private static volatile WordDatabase INSTANCE;
 
@@ -20,7 +20,7 @@ public abstract class WordDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context, WordDatabase.class, "word_database")
 //                            .allowMainThreadQueries()
 //                            .fallbackToDestructiveMigration()//破坏式迁移
-                            .addMigrations(MIGRATION_3_4)
+                            .addMigrations(MIGRATION_4_5)
                             .build();
                 }
             }
@@ -56,5 +56,11 @@ public abstract class WordDatabase extends RoomDatabase {
         }
     };
 
+    private static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE word ADD COLUMN chinese_invisible INTEGER NOT NULL DEFAULT 0");
+        }
+    };
 
 }
