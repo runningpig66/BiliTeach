@@ -24,13 +24,13 @@
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
     <loaded-nodes>
-      <connection connection-id="cf9d3637-b019-46af-8291-faa0871a7cea">
-        <schema name="main" object-types="view, table" />
+      <connection connection-id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6">
+        <schema name="main" object-types="index, column, dataset trigger, view, table, constraint" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="cf9d3637-b019-46af-8291-faa0871a7cea">
+    <connection id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6">
       <console name="Connection" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
@@ -38,13 +38,11 @@
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="cf9d3637-b019-46af-8291-faa0871a7cea" />
+    <connection id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="cf9d3637-b019-46af-8291-faa0871a7cea" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="cf9d3637-b019-46af-8291-faa0871a7cea" dataset="main.Word" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="cf9d3637-b019-46af-8291-faa0871a7cea" dataset="main.room_master_table" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="cf9d3637-b019-46af-8291-faa0871a7cea" dataset="main.android_metadata" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6" dataset="main.Word" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6" dataset="main.word" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -69,7 +67,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="cf9d3637-b019-46af-8291-faa0871a7cea" active="true">
+      <connection id="a7edb0a4-3b3d-4379-ad30-9cabc2c6e5e6" active="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -84,7 +82,7 @@
           <port value="1234" />
           <database value="database" />
           <files>
-            <file path="C:\Users\tianyanyu\Desktop\word database" schema="main" />
+            <file path="C:\Users\tianyanyu\Desktop\word_database" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
